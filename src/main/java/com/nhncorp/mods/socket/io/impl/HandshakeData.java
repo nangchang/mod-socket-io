@@ -48,6 +48,7 @@ public class HandshakeData extends JsonObject implements Shareable {
 		this.issued = now.getTime();
 		this.url = clientData.getRequest().uri();
 		this.queryParams = clientData.getParams();
+		this.address = clientData.getRequest().remoteAddress();
 	}
 
 	public MultiMap getHeaders() {
