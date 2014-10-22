@@ -2,6 +2,7 @@ package com.nhncorp.mods.socket.io.impl.transports;
 
 import com.nhncorp.mods.socket.io.impl.ClientData;
 import com.nhncorp.mods.socket.io.impl.Manager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vertx.java.core.MultiMap;
@@ -23,7 +24,7 @@ public class JsonpPolling extends HttpPolling {
 
 	public JsonpPolling(Manager manager, ClientData clientData)  {
 		super(manager, clientData);
-		this.head = "io.j[0](";
+		this.head = "io.j";
 		this.foot = ");";
 	}
 
@@ -44,8 +45,9 @@ public class JsonpPolling extends HttpPolling {
 
 		// JSON.stringfy(encodedPacket)
 //		String result = JsonUtils.stringify(encodedPacket);
+		String index = clientData.getParams().get("i");
 		String result = Json.encode(encodedPacket);
-		String data = (encodedPacket == null) ? "" : this.head + result + this.foot;
+		String data = (encodedPacket == null) ? "" : this.head + "[" + index + "](" + result + this.foot;
 
 		this.response.setStatusCode(200);
 		MultiMap headers = this.response.headers();
